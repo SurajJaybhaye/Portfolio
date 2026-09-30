@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --surface: #fbf9f5;
+  --on-surface: #30332e;
+  --primary: #5a6a8c;
+  --secondary: #506454;
+  --tertiary: #6d5c4e;
+  --container-low: #f5f3ee;
+  --container-high: #eae8e2;
+  --container-highest: #e2e0da;
+  --shadow-dark: #30332e0f;
+  --shadow-inset-light: #ffffffcc;
+  --shadow-inset-dark: #30332e08;
+  --faint: color-mix(in srgb, var(--on-surface) 70%, var(--surface));
+  --mid: color-mix(in srgb, var(--on-surface) 76%, var(--surface));
+  --heat-1: #c4dcc2;
+  --heat-2: #8fc28f;
+  --heat-3: #57a05b;
+  --heat-4: #2f7a3b;
+}
+
+.dark {
+  --surface: #1a1c1e;
+  --on-surface: #e2e3db;
+  --primary: #8da4cc;
+  --secondary: #8aad8f;
+  --tertiary: #b89a86;
+  --container-low: #202326;
+  --container-high: #2a2d30;
+  --container-highest: #34383b;
+  --shadow-dark: #0000004d;
+  --shadow-inset-light: #3c3c3c14;
+  --shadow-inset-dark: #00000033;
+  --faint: color-mix(in srgb, var(--on-surface) 60%, var(--surface));
+  --mid: color-mix(in srgb, var(--on-surface) 68%, var(--surface));
+  --heat-1: #1f4a2a;
+  --heat-2: #2f7a3b;
+  --heat-3: #47a355;
+  --heat-4: #7bd389;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-container-low: var(--container-low);
+  --color-container-high: var(--container-high);
+  --color-container-highest: var(--container-highest);
+  --color-faint: var(--faint);
+  --color-mid: var(--mid);
+  --color-heat-1: var(--heat-1);
+  --color-heat-2: var(--heat-2);
+  --color-heat-3: var(--heat-3);
+  --color-heat-4: var(--heat-4);
+  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-public-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Theme switch crossfade (View Transitions API). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-public-sans), system-ui, sans-serif;
+}
+
+.ambient-shadow {
+  box-shadow: 0 4px 24px -4px var(--shadow-dark);
+}
+
+.neumorphic {
+  box-shadow:
+    16px 16px 32px var(--shadow-dark),
+    inset 3px 3px 6px var(--shadow-inset-light),
+    inset -3px -3px 6px var(--shadow-inset-dark);
+}
+
+.neumorphic-sm {
+  box-shadow: 4px 4px 10px var(--shadow-dark);
+}
+
+.neumorphic-badge {
+  box-shadow:
+    8px 8px 16px var(--shadow-dark),
+    inset 3px 3px 6px var(--shadow-inset-light),
+    inset -3px -3px 6px var(--shadow-inset-dark);
+}
+
+/* ---- Dark-mode depth: fine borders, badge glow, background texture ---- */
+.dark .neumorphic,
+.dark .neumorphic-badge,
+.dark .neumorphic-sm {
+  border-color: rgb(255 255 255 / 0.09);
+}
+
+.dark .neumorphic-badge {
+  transition-property: transform, box-shadow, border-color;
+  box-shadow:
+    8px 8px 16px var(--shadow-dark),
+    inset 3px 3px 6px var(--shadow-inset-light),
+    inset -3px -3px 6px var(--shadow-inset-dark),
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 0 20px -8px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+.dark .group:hover .neumorphic-badge {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow:
+    8px 8px 16px var(--shadow-dark),
+    inset 3px 3px 6px var(--shadow-inset-light),
+    inset -3px -3px 6px var(--shadow-inset-dark),
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 0 26px -4px color-mix(in srgb, var(--primary) 60%, transparent);
+}
+
+.dark .neumorphic {
+  box-shadow:
+    16px 16px 32px var(--shadow-dark),
+    inset 3px 3px 6px var(--shadow-inset-light),
+    inset -3px -3px 6px var(--shadow-inset-dark),
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 0 26px -10px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.dark .neumorphic-sm {
+  box-shadow:
+    4px 4px 10px var(--shadow-dark),
+    inset 0 1px 0 rgb(255 255 255 / 0.07);
+}
+
+/* Soft top glow plus fine grain, behind all content. */
+.dark body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      60% 45% at 50% 0%,
+      color-mix(in srgb, var(--primary) 14%, transparent),
+      transparent 70%
+    ),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.05'/></svg>");
+}
