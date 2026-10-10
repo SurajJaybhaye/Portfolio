@@ -4,6 +4,7 @@ import Reveal from "@/components/Reveal";
 import FadeIn from "@/components/FadeIn";
 import CompanyIcon from "@/components/CompanyIcon";
 import SectionNav from "@/components/SectionNav";
+import AiAssistant from "@/components/AiAssistant";
 import {
   LuMail,
   LuExternalLink,
@@ -20,8 +21,10 @@ import {
   experience,
   education,
   skills,
+  skillsNote,
   projects,
 } from "@/lib/content";
+import { LEETCODE_URL } from "@/lib/leetcode";
 
 function Section({
   id,
@@ -68,6 +71,7 @@ export default function Home() {
     <main className="mx-auto max-w-2xl px-6 pb-12">
       <ThemeToggle />
       <SectionNav />
+      <AiAssistant />
 
       {/* Hero: fills the first screen; Experience and the rest come on scroll. */}
       <section
@@ -109,13 +113,22 @@ export default function Home() {
 
         <FadeIn delay={0.2}>
           <h1 className="mb-7 text-balance whitespace-pre-line font-serif text-[2.15rem] leading-[1.15] tracking-tight text-on-surface sm:mb-10 sm:text-[2.5rem] md:text-[3rem]">
-            {profile.headline}
+            {/* Keep each side of the "|" together so a wrap never splits a phrase. */}
+            {profile.headline.split(" | ").map((part, i, all) => (
+              <span key={part}>
+                {i > 0 && " "}
+                <span className="whitespace-nowrap">
+                  {part}
+                  {i < all.length - 1 && " |"}
+                </span>
+              </span>
+            ))}
           </h1>
         </FadeIn>
 
         <div className="space-y-6 text-[0.95rem] leading-relaxed text-on-surface/70">
           <FadeIn delay={0.3}>
-            <p className="max-w-lg">{profile.intro}</p>
+            <p className="max-w-xl">{profile.summary}</p>
           </FadeIn>
           <FadeIn delay={0.4}>
             <div className="flex flex-wrap items-center gap-3 pt-4">
@@ -160,17 +173,28 @@ export default function Home() {
                     </h3>
                     <p className="mt-1 text-sm text-mid transition-colors duration-300 group-hover:text-on-surface/80">
                       {e.company}
+                      <span className="text-faint"> · {e.location}</span>
                     </p>
                     <p className="mt-1.5 text-xs uppercase tracking-wider text-faint">
                       {e.dates}
                     </p>
-                    <ul className="mt-4 list-disc space-y-2 pl-4 text-sm leading-relaxed text-on-surface/70 marker:text-on-surface/30">
-                      {e.points.map((pt) => (
-                        <li key={pt}>
-                          <RichText text={pt} />
-                        </li>
+                    <div className="mt-5 space-y-6">
+                      {e.work.map((w) => (
+                        <div key={w.name}>
+                          <h4 className="text-sm font-semibold text-on-surface">
+                            {w.name}
+                          </h4>
+                          <p className="mt-0.5 text-xs text-faint">{w.tech}</p>
+                          <ul className="mt-3 list-disc space-y-2 pl-4 text-sm leading-relaxed text-on-surface/70 marker:text-on-surface/30">
+                            {w.points.map((pt) => (
+                              <li key={pt}>
+                                <RichText text={pt} />
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
                 {i < experience.length - 1 && (
@@ -223,7 +247,7 @@ export default function Home() {
         <div className="space-y-6">
           {Object.entries(skills).map(([group, items], gi) => (
             <Reveal key={group} delay={Math.min(gi * 0.08, 0.3)}>
-              <div className="grid gap-3 sm:grid-cols-[8.5rem_1fr] sm:gap-6">
+              <div className="grid gap-3 sm:grid-cols-[10rem_1fr] sm:gap-6">
                 <h3 className="pt-2 text-xs uppercase tracking-widest text-faint">
                   {group}
                 </h3>
@@ -245,6 +269,9 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={0.3}>
+          <p className="mt-6 text-sm text-faint">{skillsNote}</p>
+        </Reveal>
       </Section>
 
       <Section id="projects" title="Projects" subtitle="Selected work">
@@ -328,6 +355,32 @@ export default function Home() {
       </Section>
 
       <Section id="activity" title="Coding activity" subtitle="LeetCode">
+        <Reveal>
+          <p className="mb-6 text-[0.95rem] leading-relaxed text-on-surface/70">
+            250+ DSA problems solved across{" "}
+            <a
+              href={LEETCODE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-2"
+            >
+              LeetCode
+            </a>{" "}
+            and{" "}
+            {profile.gfg ? (
+              <a
+                href={profile.gfg}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline underline-offset-2"
+              >
+                GeeksforGeeks
+              </a>
+            ) : (
+              "GeeksforGeeks"
+            )}
+          </p>
+        </Reveal>
         <Reveal>
           <LeetCodeHeatmap />
         </Reveal>

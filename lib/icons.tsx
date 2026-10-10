@@ -15,8 +15,9 @@ import {
   LuArrowLeftRight,
   LuLandmark,
   LuWifiOff,
-  LuWorkflow,
-  LuSprout,
+  LuDatabase,
+  LuBoxes,
+  LuScanText,
 } from "react-icons/lu";
 import {
   SiReact,
@@ -47,6 +48,10 @@ import {
   SiFastapi,
   SiGooglegemini,
   SiHibernate,
+  SiShadcnui,
+  SiGooglecloud,
+  SiGithub,
+  SiJunit5,
 } from "react-icons/si";
 
 const skillIcons: Record<string, IconType> = {
@@ -82,6 +87,18 @@ const skillIcons: Record<string, IconType> = {
   FastAPI: SiFastapi,
   Gemini: SiGooglegemini,
   Hibernate: SiHibernate,
+  SQL: LuDatabase,
+  "shadcn/ui": SiShadcnui,
+  "LLM Integration (Gemini)": SiGooglegemini,
+  // No brand icon exists for Genkit, so a generic AI sparkle is used.
+  "Google Genkit": LuSparkles,
+  Embeddings: LuBoxes,
+  OCR: LuScanText,
+  "Google Cloud": SiGooglecloud,
+  "AWS (EC2, S3, Lambda)": FaAws,
+  GitHub: SiGithub,
+  JUnit: SiJunit5,
+  "Claude Code": SiClaude,
 };
 
 const socialIcons: Record<string, IconType> = {
@@ -95,8 +112,6 @@ const socialIcons: Record<string, IconType> = {
 const projectIcons: Record<string, IconType> = {
   GovIntel: LuLandmark,
   "UPI Offline Mesh": LuWifiOff,
-  "Job-Posting Automation": LuWorkflow,
-  "Multi-tenant Agri ERP": LuSprout,
 };
 
 // Falls back to a generic icon so unknown names in content.ts never break the page.

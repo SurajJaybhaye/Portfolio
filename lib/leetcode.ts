@@ -17,8 +17,14 @@ async function fetchRaw(): Promise<Raw> {
   try {
     const res = await fetch("https://leetcode.com/graphql", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Referer: "https://leetcode.com" },
-      body: JSON.stringify({ query: QUERY, variables: { username: LEETCODE_USER } }),
+      headers: {
+        "Content-Type": "application/json",
+        Referer: "https://leetcode.com",
+      },
+      body: JSON.stringify({
+        query: QUERY,
+        variables: { username: LEETCODE_USER },
+      }),
       next: { revalidate: 3600 },
     });
     if (!res.ok) throw new Error(String(res.status));
@@ -42,7 +48,8 @@ export async function getActivity() {
 
   // Last 53 weekly columns, Sunday-first, ending with the current week (UTC).
   const now = new Date();
-  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 1000;
+  const today =
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 1000;
   const weekday = new Date(today * 1000).getUTCDay();
   const start = today - (weekday + 52 * 7) * DAY;
 

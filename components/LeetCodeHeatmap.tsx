@@ -56,7 +56,7 @@ export default async function LeetCodeHeatmap() {
         </p>
       </div>
 
-      <ScrollEnd>
+      <ScrollEnd label="LeetCode submissions over the past year">
         <div className="min-w-[560px]">
           <div
             className="grid gap-[3px]"

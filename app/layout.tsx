@@ -13,11 +13,18 @@ const publicSans = Public_Sans({
   subsets: ["latin"],
 });
 
+// Base for the link-preview (Open Graph / Twitter) image URLs. Order of preference:
+// 1. NEXT_PUBLIC_SITE_URL, set to your own domain (for example https://yourname.com)
+// 2. On Vercel, the project's production domain, which Vercel provides itself
+// 3. localhost, only for local development
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  // Set NEXT_PUBLIC_SITE_URL to the deployed domain so link previews resolve.
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(siteUrl),
   title: `${profile.name} — ${profile.title}`,
   description: profile.bio,
   openGraph: {
